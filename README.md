@@ -1,5 +1,5 @@
 # Configuration Client
-It allows the configuration of a keycloak instance with the plugin already installed 
+It allows the configuration of a keycloak instance with the https://github.com/lscorcia/keycloak-spid-provider plugin already installed 
 
 ## requirements
 * node
