@@ -1,8 +1,14 @@
-const { from, of, concat } = require('rxjs')
-const { map, mergeMap } = require('rxjs/operators')
+const {from, of, concat} = require('rxjs')
+const {map, mergeMap} = require('rxjs/operators')
 
-const { config, patchTemplateWithRealm } = require('./src/common')
-const { httpGrabIdPsMetadata, httpCallKeycloakImportConfig, httpCallKeycloakCreateIdP, httpCallKeycloakDeleteIdP, httpCallKeycloakCreateAllMappers } = require('./src/http')
+const {config, patchTemplateWithRealm} = require('./src/common')
+const {
+    httpGrabIdPsMetadata,
+    httpCallKeycloakImportConfig,
+    httpCallKeycloakCreateIdP,
+    httpCallKeycloakDeleteIdP,
+    httpCallKeycloakCreateAllMappers
+} = require('./src/http')
 
 
 const idPTemplate = JSON.parse(patchTemplateWithRealm('./template/idpmodel.json'))
@@ -26,7 +32,6 @@ if (config.createSpidTestIdP === 'true') {
 }
 
 
-
 //richiesta cancellazione degli idPs da keycloak
 var deleteKeycloakSpidIdPs$ = getOfficialSpididPsMetadata$
     .pipe(mergeMap(spidIdPOfficialMetadata => from(httpCallKeycloakDeleteIdP(spidIdPOfficialMetadata.entity_name).then(httpResponse => spidIdPOfficialMetadata))))
@@ -37,15 +42,17 @@ var getKeycloakImportConfigModels$ = deleteKeycloakSpidIdPs$
     .pipe(mergeMap(spidIdPOfficialMetadata => from(httpCallKeycloakImportConfig(spidIdPOfficialMetadata.metadata_url).then(httpResponse => [spidIdPOfficialMetadata, httpResponse.data]))))
 
 //trasformazione ed arricchimento => modello per creare l'idP su keycloak
+let attributeConsumingServiceIndexCounter = 0;
 var enrichedModels$ = getKeycloakImportConfigModels$
     .pipe(map(spidIdPOfficialMetadataWithImportConfigModel => {
         let [idPOfficialMetadata, importConfigModel] = spidIdPOfficialMetadataWithImportConfigModel
-        let config = { ...idPTemplate.config, ...importConfigModel }
+        let config = {...idPTemplate.config, ...importConfigModel}
         let firstLevel = {
             alias: idPOfficialMetadata.entity_name
         }
-        let merged = { ...idPTemplate, ...firstLevel }
+        let merged = {...idPTemplate, ...firstLevel}
         merged.config = config
+        merged.config['attributeConsumingServiceIndex'] = attributeConsumingServiceIndexCounter++
         return merged
     }))
 
@@ -56,7 +63,9 @@ var createSpidIdPsOnKeycloak$ = enrichedModels$
 //creazione dei mappers per lo spid id
 var createKeycloackSpidIdPsMappers$ = createSpidIdPsOnKeycloak$.pipe(mergeMap(idPAliasWithHttpCreateResponse => {
     let [alias, createResponse] = idPAliasWithHttpCreateResponse
-    return from(httpCallKeycloakCreateAllMappers(alias).then(response => { return { alias, create_response: createResponse, mapper_response: response } }))
+    return from(httpCallKeycloakCreateAllMappers(alias).then(response => {
+        return {alias, create_response: createResponse, mapper_response: response}
+    }))
 }))
 
 
