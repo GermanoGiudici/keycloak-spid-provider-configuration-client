@@ -32,5 +32,9 @@ spidTestIdPMetadataURL = http://localhost:8088/metadata
 
 You can use the same properties to configure the Official Spid Validator https://github.com/italia/spid-saml-check 
 
+## TODO
+The attributeConsumingServiceIndex attribute of the Keycloak IdP configuration is incremented automatically but it's better dublecheck it 
+
+
 This project is released under the Apache License 2.0, same as the main Keycloak
 package.

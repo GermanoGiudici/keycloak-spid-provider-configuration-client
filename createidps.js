@@ -31,6 +31,19 @@ if (config.createSpidTestIdP === 'true') {
 
 }
 
+if (config.createSpidValidatorIdP === 'true') {
+    let SpidValidatorIdPOfficialMetadata = {
+        ipa_entity_code: config.spidValidatorIdPAlias,
+        entity_id: config.spidValidatorIdPAlias,
+        entity_name: config.spidValidatorIdPAlias,
+        metadata_url: config.spidValidatorIdPMetadataURL,
+        entity_type: 'IdP'
+    }
+
+    getOfficialSpididPsMetadata$ = concat(getOfficialSpididPsMetadata$, of(SpidValidatorIdPOfficialMetadata))
+
+}
+
 
 //richiesta cancellazione degli idPs da keycloak
 var deleteKeycloakSpidIdPs$ = getOfficialSpididPsMetadata$
