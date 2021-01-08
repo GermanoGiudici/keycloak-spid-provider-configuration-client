@@ -1,7 +1,7 @@
 const {from, of, concat} = require('rxjs')
 const {map, mergeMap} = require('rxjs/operators')
 
-const {config, patchTemplateWithRealm} = require('./src/common')
+const {config, patchTemplate} = require('./src/common')
 const {
     httpGrabIdPsMetadata,
     httpCallKeycloakImportConfig,
@@ -11,7 +11,7 @@ const {
 } = require('./src/http')
 
 
-const idPTemplate = JSON.parse(patchTemplateWithRealm('./template/idpmodel.json'))
+const idPTemplate = JSON.parse(patchTemplate('./template/idpmodel.json'))
 
 
 //recupero url metadati

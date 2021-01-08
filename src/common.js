@@ -13,7 +13,9 @@ exports.firstnameMapperTemplate = require('../template/firstname_mm.json')
 exports.emailMapperTemplate = require('../template/email_mm.json');
 
 
-exports.patchTemplateWithRealm = function (templateFilePath) {
-    return fs.readFileSync(templateFilePath).toString().replace(/%CHANGEIT%/g, config.realm)
+exports.patchTemplate = function (templateFilePath) {
+    let templateString = fs.readFileSync(templateFilePath).toString();
+    return templateString.replace(/%REALM%/g, config.realm)
+        .replace(/%KEYCLOAKSERVERBASEURL%/g, config.keycloakServerBaseURL)
 }
 

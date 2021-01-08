@@ -1,7 +1,7 @@
 const { config } = require('./common')
 const qs = require('qs')
 const axios = require('axios')
-const { usernameMapperTemplate, lastnameMapperTemplate, firstnameMapperTemplate, emailMapperTemplate, patchTemplateWithRealm } = require('./common')
+const { usernameMapperTemplate, lastnameMapperTemplate, firstnameMapperTemplate, emailMapperTemplate, patchTemplate } = require('./common')
 
 
 const tokenConfig = {
@@ -130,7 +130,7 @@ exports.httpCallKeycloakCreateAllMappers = function (idPAlias) {
 
 exports.httpCallKeycloakImportRealm = function () {
     return httpGrabKeycloaktoken().then(token => {
-        let data = patchTemplateWithRealm('./template/realm-template.json');
+        let data = patchTemplate('./template/realm-template.json');
         let axiosConfig = {
             method: 'post',
             url: config.keycloakServerBaseURL + '/auth/admin/realms/',

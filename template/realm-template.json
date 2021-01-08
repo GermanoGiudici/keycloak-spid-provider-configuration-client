@@ -1,6 +1,6 @@
 {
-  "id": "%CHANGEIT%",
-  "realm": "%CHANGEIT%",
+  "id": "%REALM%",
+  "realm": "%REALM%",
   "notBefore": 0,
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
@@ -48,7 +48,7 @@
         "description": "${role_offline-access}",
         "composite": false,
         "clientRole": false,
-        "containerId": "%CHANGEIT%",
+        "containerId": "%REALM%",
         "attributes": {}
       },
       {
@@ -57,7 +57,7 @@
         "description": "${role_uma_authorization}",
         "composite": false,
         "clientRole": false,
-        "containerId": "%CHANGEIT%",
+        "containerId": "%REALM%",
         "attributes": {}
       }
     ],
@@ -435,7 +435,7 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/%CHANGEIT%/account/",
+      "baseUrl": "/realms/%REALM%/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
@@ -446,7 +446,7 @@
         "manage-account"
       ],
       "redirectUris": [
-        "/realms/%CHANGEIT%/account/*"
+        "/realms/%REALM%/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -482,14 +482,14 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/%CHANGEIT%/account/",
+      "baseUrl": "/realms/%REALM%/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "/realms/%CHANGEIT%/account/*"
+        "/realms/%REALM%/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -675,14 +675,14 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/%CHANGEIT%/console/",
+      "baseUrl": "/admin/%REALM%/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "/admin/%CHANGEIT%/console/*"
+        "/admin/%REALM%/console/*"
       ],
       "webOrigins": [
         "+"
