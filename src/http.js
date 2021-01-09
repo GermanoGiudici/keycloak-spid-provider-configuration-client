@@ -1,7 +1,13 @@
-const { config } = require('./common')
+const {config} = require('./common')
 const qs = require('qs')
 const axios = require('axios')
-const { usernameMapperTemplate, lastnameMapperTemplate, firstnameMapperTemplate, emailMapperTemplate, patchTemplate } = require('./common')
+const {
+    usernameMapperTemplate,
+    lastnameMapperTemplate,
+    firstnameMapperTemplate,
+    emailMapperTemplate,
+    patchTemplate
+} = require('./common')
 
 
 const tokenConfig = {
@@ -42,7 +48,7 @@ exports.httpGrabKeycloaktoken = httpGrabKeycloaktoken
 
 exports.httpCallKeycloakImportConfig = function (idPsMetadataUrl) {
     return httpGrabKeycloaktoken().then(token => {
-        let data = JSON.stringify({ "providerId": "spid", "fromUrl": idPsMetadataUrl });
+        let data = JSON.stringify({"providerId": "spid", "fromUrl": idPsMetadataUrl});
         let axiosConfig = {
             method: 'post',
             url: config.keycloakServerBaseURL + '/auth/admin/realms/' + config.realm + '/identity-provider/import-config',
@@ -59,7 +65,6 @@ exports.httpCallKeycloakImportConfig = function (idPsMetadataUrl) {
     })
 
 }
-
 
 
 exports.httpCallKeycloakCreateIdP = function (idPModel) {
@@ -99,18 +104,15 @@ exports.httpCallKeycloakDeleteIdP = function (idPAlias) {
     })
 }
 
-const httpCallKeycloakCreateMapper = function (idPAlias, mapperModel) {
+exports.httpCallKeycloakGetIpds = function () {
     return httpGrabKeycloaktoken().then(token => {
-        mapperModel.identityProviderAlias = idPAlias
-        let data = JSON.stringify(mapperModel);
         let axiosConfig = {
-            method: 'post',
-            url: config.keycloakServerBaseURL + '/auth/admin/realms/' + config.realm + '/identity-provider/instances/' + idPAlias + '/mappers',
+            method: 'get',
+            url: config.keycloakServerBaseURL + '/auth/admin/realms/' + config.realm + '/identity-provider/instances',
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
-            },
-            data: data
+            }
         };
         return axios(axiosConfig)
             .catch(function (error) {
@@ -118,6 +120,20 @@ const httpCallKeycloakCreateMapper = function (idPAlias, mapperModel) {
             });
     })
 }
+
+
+exports.httpCallKeycloakGetIpdDescription = function (idpAlias) {
+    let axiosConfig = {
+        method: 'get',
+        url: config.keycloakServerBaseURL + '/auth/realms/' + config.realm + '/broker/' + encodeURIComponent(idpAlias) + '/endpoint/descriptor',
+    };
+    return axios(axiosConfig)
+        .catch(function (error) {
+            console.log(error);
+        });
+
+}
+
 
 exports.httpCallKeycloakCreateAllMappers = function (idPAlias) {
     return Promise.all([
@@ -134,6 +150,27 @@ exports.httpCallKeycloakImportRealm = function () {
         let axiosConfig = {
             method: 'post',
             url: config.keycloakServerBaseURL + '/auth/admin/realms/',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+        return axios(axiosConfig)
+            .catch(function (error) {
+                console.log(error);
+            });
+    })
+}
+
+
+const httpCallKeycloakCreateMapper = function (idPAlias, mapperModel) {
+    return httpGrabKeycloaktoken().then(token => {
+        mapperModel.identityProviderAlias = idPAlias
+        let data = JSON.stringify(mapperModel);
+        let axiosConfig = {
+            method: 'post',
+            url: config.keycloakServerBaseURL + '/auth/admin/realms/' + config.realm + '/identity-provider/instances/' + idPAlias + '/mappers',
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'

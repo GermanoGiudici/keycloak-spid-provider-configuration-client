@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!-- Esempio di metadata Service Provider
+     Per informazioni sulla compilazione fare riferimento alle Regole Tecniche SPID -->
+
+<!-- entityID è una URI che individua univocamente il Service Provider -->
+<md:EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+                     xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+                     xmlns:spid="https://spid.gov.it/saml-extensions"
+                     entityID="%ENTITYID%"
+                     ID="ID_c92f6514-8916-44f1-a4ac-b83a9167544c">
+
+    <md:SPSSODescriptor
+            protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"
+            AuthnRequestsSigned="true"
+            WantAssertionsSigned="true">
+
+        <md:KeyDescriptor use="signing">
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <ds:X509Data>
+                    <ds:X509Certificate>
+                        MIIClzCCAX8CBgF20b+zOjANBgkqhkiG9w0BAQsFADAPMQ0wCwYDVQQDDARzcGlkMB4XDTIxMDEwNTA4NTExMFoXDTMxMDEwNTA4NTI1MFowDzENMAsGA1UEAwwEc3BpZDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAIFECuADJgZQsrQiA03wfGKMoNGMmK+z3QIvMGylGJG2OaLkuR0ehKuwXNjhh30R+bBOLIsjKubl13UyB11cVS1yiaMcgMMJKm50Krpa4fCzvsMxN59c88YJLDPuPaCCFLDv3BlG+FcB8SFxZmPgr8Z+TuikeL/NiJZY371bLityGNNM1E+OF7kEAwKE34/5x+oEykUQXS1h60ZSZMNEbl8CuMzYOnt/9JgbRCzwoMroA1/JHH86S/4S/jXmj4UOnHMEAcQ3CN00Zlt30PKagIXBMWSZNAnNVKKM+tAq3/8KMv8ssBLxNv5G/QZm2b36ECTqyA8SeldMxJ8mC8CCqrECAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAO4pKsQyf9XLuMTt1tsDIrrRM4ydZDjq2/n0G/3AM0Srlhd0O9utZNMONUa1498b0rDaQPFModspnVJNF+RWqcMlfKTl0wUIsRqciXpyI1eoGKaNffwulREi1AxXN2+rRzvD7WxLW8EtyBmW/BixFvZIdRYUdzY9z2i+mIsZJRn1uSf1OP82+3k+Lls0HKmRk7tYWwVRNou1gJhS3u+/JQe4uhrOqVOOw6MupEMbEWrZZ4wC0OmwHMP13VCnU0D8JbGFaB4/RXFJvOMn6IiELd7KrzBxX6ByxvtnUvq9EJ54TXE020JNhY7MWclS0D4IBeUeThKqV6/GBFl+wSPNt7A==
+                    </ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </md:KeyDescriptor>
+
+        <md:KeyDescriptor use="encryption">
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <ds:X509Data>
+                    <ds:X509Certificate>
+                        MIIClzCCAX8CBgF20b+zOjANBgkqhkiG9w0BAQsFADAPMQ0wCwYDVQQDDARzcGlkMB4XDTIxMDEwNTA4NTExMFoXDTMxMDEwNTA4NTI1MFowDzENMAsGA1UEAwwEc3BpZDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAIFECuADJgZQsrQiA03wfGKMoNGMmK+z3QIvMGylGJG2OaLkuR0ehKuwXNjhh30R+bBOLIsjKubl13UyB11cVS1yiaMcgMMJKm50Krpa4fCzvsMxN59c88YJLDPuPaCCFLDv3BlG+FcB8SFxZmPgr8Z+TuikeL/NiJZY371bLityGNNM1E+OF7kEAwKE34/5x+oEykUQXS1h60ZSZMNEbl8CuMzYOnt/9JgbRCzwoMroA1/JHH86S/4S/jXmj4UOnHMEAcQ3CN00Zlt30PKagIXBMWSZNAnNVKKM+tAq3/8KMv8ssBLxNv5G/QZm2b36ECTqyA8SeldMxJ8mC8CCqrECAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAO4pKsQyf9XLuMTt1tsDIrrRM4ydZDjq2/n0G/3AM0Srlhd0O9utZNMONUa1498b0rDaQPFModspnVJNF+RWqcMlfKTl0wUIsRqciXpyI1eoGKaNffwulREi1AxXN2+rRzvD7WxLW8EtyBmW/BixFvZIdRYUdzY9z2i+mIsZJRn1uSf1OP82+3k+Lls0HKmRk7tYWwVRNou1gJhS3u+/JQe4uhrOqVOOw6MupEMbEWrZZ4wC0OmwHMP13VCnU0D8JbGFaB4/RXFJvOMn6IiELd7KrzBxX6ByxvtnUvq9EJ54TXE020JNhY7MWclS0D4IBeUeThKqV6/GBFl+wSPNt7A==
+                    </ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </md:KeyDescriptor>
+
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://idptest.spid.gov.it/slo"/>
+
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat>
+
+        <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://quickstart-kc-spide6.okd-entando.org/auth/realms/entando/broker/spid-test-saml-check/endpoint" isDefault="true" index="1"/>
+
+        <md:AttributeConsumingService index="1">
+            <md:ServiceName xml:lang="it">Entando SPID</md:ServiceName>
+            <md:ServiceDescription xml:lang="it">Test SPID con Entando</md:ServiceDescription>
+            <md:RequestedAttribute Name="name" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="fiscalNumber" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="familyName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="spidCode" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="gender" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="dateOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="countyOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="idCard" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="registeredOffice" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="email" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="digitalAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="ivaCode" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="placeOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="companyName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="mobilePhone" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="address" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+            <md:RequestedAttribute Name="expirationDate" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"/>
+        </md:AttributeConsumingService>
+
+    </md:SPSSODescriptor>
+
+    <md:Organization>
+        <md:OrganizationName xml:lang="it">Entando Spid test env</md:OrganizationName>
+        <md:OrganizationDisplayName xml:lang="it">Entando</md:OrganizationDisplayName>
+        <md:OrganizationURL xml:lang="it">https://www.entando.com/</md:OrganizationURL>
+    </md:Organization>
+    <md:ContactPerson contactType="other">
+        <md:Extensions>
+            <spid:VATNumber>pIVA_SP</spid:VATNumber>
+            <spid:FiscalCode>CF_SP</spid:FiscalCode>
+            <spid:Private/>
+        </md:Extensions>
+        <md:EmailAddress>ref.amm@soggetto.it</md:EmailAddress>
+        <md:TelephoneNumber>telefono_referente</md:TelephoneNumber>
+    </md:ContactPerson>
+    <md:ContactPerson contactType="billing">
+        <md:Extensions xmlns:fpa="https://spid.gov.it/invoicing-extensions">
+            <fpa:CessionarioCommittente>
+                <fpa:DatiAnagrafici>
+                    <fpa:IdFiscaleIVA>
+                        <fpa:IdPaese>IT</fpa:IdPaese>
+                        <fpa:IdCodice>+390123456789</fpa:IdCodice>
+                    </fpa:IdFiscaleIVA>
+                    <fpa:Anagrafica>
+                        <fpa:Denominazione>Azienda_Destinataria_Fatturazione</fpa:Denominazione>
+                    </fpa:Anagrafica>
+                </fpa:DatiAnagrafici>
+                <fpa:Sede>
+                    <fpa:Indirizzo>via [...]</fpa:Indirizzo>
+                    <fpa:NumeroCivico>99</fpa:NumeroCivico>
+                    <fpa:CAP>12345</fpa:CAP>
+                    <fpa:Comune>nome_citta</fpa:Comune>
+                    <fpa:Provincia>XY</fpa:Provincia>
+                    <fpa:Nazione>IT</fpa:Nazione>
+                </fpa:Sede>
+            </fpa:CessionarioCommittente>
+        </md:Extensions>
+        <md:Company>Destinatario_Fatturazione</md:Company>
+        <md:EmailAddress>email@fatturazione</md:EmailAddress>
+        <md:TelephoneNumber>telefono_fatture</md:TelephoneNumber>
+    </md:ContactPerson>
+</md:EntityDescriptor>
