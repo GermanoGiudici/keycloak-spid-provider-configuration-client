@@ -7,10 +7,18 @@ beforeAll(() => {
 });
 
 test('Can get the assertionCustomerservice token from the (mocked) partial keycloak metadata', () => {
-    let result = parser.getAssertionConsumerServiceToken(toParse)
+    let result = parser.getAssertionConsumerServiceToken(toParse, "2")
     let expectedResult = `<md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
                                      Location="https://quickstart-kc-spide6.okd-entando.org/auth/realms/entando/broker/Lepida%20ID/endpoint"
-                                      index="1"/>`
+                                      index="2"/>`
+    expect(result).toBe(expectedResult)
+})
+
+test('Can get the assertionCustomerservice token from the (mocked) partial keycloak metadata and set the correct isDefault', () => {
+    let result = parser.getAssertionConsumerServiceToken(toParse, "0")
+    let expectedResult = `<md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+                                     Location="https://quickstart-kc-spide6.okd-entando.org/auth/realms/entando/broker/Lepida%20ID/endpoint"
+                                      index="0" isDefault="true"/>`
     expect(result).toBe(expectedResult)
 })
 

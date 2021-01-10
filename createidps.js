@@ -44,6 +44,7 @@ if (config.createSpidValidatorIdP === 'true') {
 
 }
 
+//getOfficialSpididPsMetadata$.subscribe(console.log)
 
 //richiesta cancellazione degli idPs da keycloak
 var deleteKeycloakSpidIdPs$ = getOfficialSpididPsMetadata$
