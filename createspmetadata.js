@@ -2,6 +2,8 @@ const {httpCallKeycloakGetIpds, httpCallKeycloakGetIpdDescription} = require('./
 const {getAssertionConsumerServiceToken, getCertificateToken} = require('./src/spmetadataparser')
 const {from, of} = require('rxjs')
 const {map, mergeMap, toArray, filter, take} = require('rxjs/operators')
+const fs = require('fs')
+const ejs = require('ejs');
 
 //recupero idp configurati su keycloak
 const getKeycloakIdPs$ = from(httpCallKeycloakGetIpds())
@@ -20,19 +22,27 @@ const idpsModelToMerge$ = getKeycloakIdPs$
         return keycloakIdpRepresentation
     }))
     .pipe(toArray())
-
-idpsModelToMerge$
-    .pipe(map(JSON.stringify))
-    .pipe(map(data=>{
-            const fs = require('fs')
-            fs.writeFile("output.json", data, 'utf8', function (err) {
-                    if (err) {
-                            console.log("An error occured while writing JSON Object to File.");
-                            return console.log(err);
-                    }
-
-                    console.log("JSON file has been saved.");
-            });
+    .pipe(map(idps => {
+        let common = {
+            entityid: idps[0].config.entityId,
+            certificate: idps[0].certificateToken
+        }
+        return {idps, common}
     }))
-    .subscribe(console.log)
-//idpsModelToMerge$.subscribe(data => console.log(JSON.stringify(data)))
+
+
+let xml$ = idpsModelToMerge$.pipe(map(jsonDataModel=>{
+    let template = fs.readFileSync('./template/sp_metadata.ejs').toString()
+    return ejs.render(template, jsonDataModel);
+}))
+
+xml$.subscribe(xml => {
+        fs.writeFile("spmetadata.xml", xml, 'utf8', function (err) {
+            if (err) {
+                console.log("An error occured while writing spmetadata.xml file.");
+                return console.log(err);
+            }
+            console.log("the spmetadata.xml file has been saved.");
+        });
+    })
+
