@@ -1,5 +1,5 @@
 const {httpCallKeycloakGetIpds, httpCallKeycloakGetIpdDescription} = require('./src/http')
-const {getAssertionConsumerServiceToken, getCertificateToken} = require('./src/spmetadataparser')
+const {getAssertionConsumerServiceToken, getCertificateToken, getSingleLayoutServiceToken} = require('./src/spmetadataparser')
 const {from, of} = require('rxjs')
 const {map, mergeMap, toArray, filter, take} = require('rxjs/operators')
 const fs = require('fs')
@@ -16,9 +16,11 @@ const idpsModelToMerge$ = getKeycloakIdPs$
     .pipe(map(tupla => {
         let [keycloakIdpRepresentation, httpResponse] = tupla
         let assertionCostumerServiceXmlToken = getAssertionConsumerServiceToken(httpResponse, keycloakIdpRepresentation.config.attributeConsumingServiceIndex)
+        let singleLayoutServiceXmlToken = getSingleLayoutServiceToken(httpResponse)
         let certificateToken = getCertificateToken(httpResponse)
         keycloakIdpRepresentation['assertionCostumerServiceXmlToken'] = assertionCostumerServiceXmlToken
         keycloakIdpRepresentation['certificateToken'] = certificateToken
+        keycloakIdpRepresentation['singleLayoutServiceXmlToken'] = singleLayoutServiceXmlToken
         return keycloakIdpRepresentation
     }))
     .pipe(toArray())

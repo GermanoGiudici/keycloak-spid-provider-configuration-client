@@ -1,5 +1,5 @@
 const {from, of, concat} = require('rxjs')
-const {map, mergeMap} = require('rxjs/operators')
+const {map, mergeMap, take} = require('rxjs/operators')
 
 const {config, patchTemplate} = require('./src/common')
 const {
@@ -67,8 +67,20 @@ var enrichedModels$ = getKeycloakImportConfigModels$
         let merged = {...idPTemplate, ...firstLevel}
         merged.config = config
         merged.config['attributeConsumingServiceIndex'] = attributeConsumingServiceIndexCounter++
+        //merged.config['validateSignature'] = false
         return merged
     }))
+
+//idp di logout
+let logoutIdpModel = (() => {
+    let logoutIdP = {...idPTemplate}
+    logoutIdP['alias'] = "logout-ep"
+    logoutIdP.config['validateSignature'] = false
+    logoutIdP.config['signingCertificate'] = ''
+    return logoutIdP
+})()
+
+enrichedModels$ = concat(enrichedModels$, of(logoutIdpModel))
 
 //creazione dello spid idP su keycloak
 var createSpidIdPsOnKeycloak$ = enrichedModels$
