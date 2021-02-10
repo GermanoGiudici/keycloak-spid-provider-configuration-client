@@ -2,11 +2,23 @@ const {config} = require('./common')
 const qs = require('qs')
 const axios = require('axios')
 const {
-    usernameMapperTemplate,
-    lastnameMapperTemplate,
-    firstnameMapperTemplate,
-    emailMapperTemplate,
-    patchTemplate
+  usernameMapperTemplate,
+  lastnameMapperTemplate,
+  firstnameMapperTemplate,
+  spidCodeMapperTemplate,
+  emailMapperTemplate,
+  taxIdMapperTemplate,
+  genderMapperTemplate,
+  dateOfBirthMapperTemplate,
+  placeOfBirthMapperTemplate,
+  countyOfBirthMapperTemplate,
+  mobilePhoneMapperTemplate,
+  addressMapperTemplate,
+  digitalAddressMapperTemplate,
+  companyNameMapperTemplate,
+  companyAddressMapperTemplate,
+  vatNumberapperTemplate,
+  patchTemplate
 } = require('./common')
 
 
@@ -140,7 +152,19 @@ exports.httpCallKeycloakCreateAllMappers = function (idPAlias) {
         httpCallKeycloakCreateMapper(idPAlias, usernameMapperTemplate),
         httpCallKeycloakCreateMapper(idPAlias, lastnameMapperTemplate),
         httpCallKeycloakCreateMapper(idPAlias, firstnameMapperTemplate),
-        httpCallKeycloakCreateMapper(idPAlias, emailMapperTemplate)
+        httpCallKeycloakCreateMapper(idPAlias, spidCodeMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, emailMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, taxIdMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, genderMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, dateOfBirthMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, placeOfBirthMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, countyOfBirthMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, mobilePhoneMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, addressMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, digitalAddressMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, companyNameMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, companyAddressMapperTemplate),
+        httpCallKeycloakCreateMapper(idPAlias, vatNumberapperTemplate),
     ])
 }
 
