@@ -1,4 +1,5 @@
 const {httpCallKeycloakGetIpds, httpCallKeycloakGetIpdDescription} = require('./src/http')
+const {config} = require('./src/common')
 const {getAssertionConsumerServiceToken, getCertificateToken, getSingleLayoutServiceToken} = require('./src/spmetadataparser')
 const {from, of} = require('rxjs')
 const {map, mergeMap, toArray, filter, take} = require('rxjs/operators')
@@ -27,7 +28,8 @@ const idpsModelToMerge$ = getKeycloakIdPs$
     .pipe(map(idps => {
         let common = {
             entityid: idps[0].config.entityId,
-            certificate: idps[0].certificateToken
+            certificate: idps[0].certificateToken,
+            realm: config.realm
         }
         return {idps, common}
     }))
