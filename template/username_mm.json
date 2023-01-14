@@ -1,5 +1,5 @@
 {
-    "name": "User Name",
+    "name": "Username",
     "identityProviderAlias": "CHANGE-IT",
     "identityProviderMapper": "spid-saml-username-idp-mapper",
     "config": {
