@@ -27,20 +27,35 @@ if (config.createSpidTestIdP === 'true') {
         entity_type: 'IdP'
     }
 
-    getOfficialSpididPsMetadata$ = concat(getOfficialSpididPsMetadata$, of(spidTestIdPOfficialMetadata))
+    getOfficialSpididPsMetadata$ = concat(getOfficialSpididPsMetadata$, of(enrichIdpWithConfigData(spidTestIdPOfficialMetadata)))
 
 }
 
 if (config.createSpidValidatorIdP === 'true') {
-    let SpidValidatorIdPOfficialMetadata = {
+    let spidValidatorIdPOfficialMetadata = {
         ipa_entity_code: config.spidValidatorIdPAlias,
         entity_id: config.spidValidatorIdPAlias,
         entity_name: config.spidValidatorIdPAlias,
         metadata_url: config.spidValidatorIdPMetadataURL,
+        displayName: config.spidValidatorIdPDisplayName,
         entity_type: 'IdP'
     }
 
-    getOfficialSpididPsMetadata$ = concat(getOfficialSpididPsMetadata$, of(SpidValidatorIdPOfficialMetadata))
+    getOfficialSpididPsMetadata$ = concat(getOfficialSpididPsMetadata$, of(enrichIdpWithConfigData(spidValidatorIdPOfficialMetadata)))
+
+}
+
+if (config.createSpidDemoIdP === 'true') {
+    let spidDemoIdPOfficialMetadata = {
+        ipa_entity_code: config.spidDemoIdPAlias,
+        entity_id: config.spidDemoIdPAlias,
+        entity_name: config.spidDemoIdPAlias,
+        metadata_url: config.spidDemoIdPMetadataURL,
+        hideOnLoginPage: "false",
+        entity_type: 'IdP'
+    }
+
+    getOfficialSpididPsMetadata$ = concat(getOfficialSpididPsMetadata$, of(enrichIdpWithConfigData(spidDemoIdPOfficialMetadata)))
 
 }
 
