@@ -1,7 +1,6 @@
 const {from, of, concat} = require('rxjs')
 const {map, mergeMap, take} = require('rxjs/operators')
-
-const {config, patchTemplate} = require('./src/common')
+const {config, patchTemplate, enrichIdpWithConfigData} = require('./src/common')
 const {
     httpGrabIdPsMetadata,
     httpCallKeycloakImportConfig,
@@ -16,7 +15,7 @@ const idPTemplate = JSON.parse(patchTemplate('./template/idpmodel.json'))
 
 //recupero url metadati
 var getOfficialSpididPsMetadata$ = from(httpGrabIdPsMetadata())
-    .pipe(mergeMap(httpResponse => from(httpResponse.data.data)))
+    .pipe(mergeMap(httpResponse => from(httpResponse.data.data.map(idp => enrichIdpWithConfigData(idp)))));
 
 if (config.createSpidTestIdP === 'true') {
     let spidTestIdPOfficialMetadata = {
@@ -71,31 +70,18 @@ var getKeycloakImportConfigModels$ = deleteKeycloakSpidIdPs$
     .pipe(mergeMap(spidIdPOfficialMetadata => from(httpCallKeycloakImportConfig(spidIdPOfficialMetadata.metadata_url).then(httpResponse => [spidIdPOfficialMetadata, httpResponse.data]))))
 
 //trasformazione ed arricchimento => modello per creare l'idP su keycloak
-let attributeConsumingServiceIndexCounter = 0;
 var enrichedModels$ = getKeycloakImportConfigModels$
     .pipe(map(spidIdPOfficialMetadataWithImportConfigModel => {
         let [idPOfficialMetadata, importConfigModel] = spidIdPOfficialMetadataWithImportConfigModel
-        let config = {...idPTemplate.config, ...importConfigModel}
+        let configIdp = {...idPTemplate.config, ...importConfigModel, ...idPOfficialMetadata.config}
         let firstLevel = {
-            alias: idPOfficialMetadata.entity_name
+            alias: idPOfficialMetadata.alias,
+            displayName: idPOfficialMetadata.displayName,
         }
         let merged = {...idPTemplate, ...firstLevel}
-        merged.config = config
-        merged.config['attributeConsumingServiceIndex'] = attributeConsumingServiceIndexCounter++
-        //merged.config['validateSignature'] = false
+        merged.config = configIdp
         return merged
     }))
-
-//idp di logout
-let logoutIdpModel = (() => {
-    let logoutIdP = {...idPTemplate}
-    logoutIdP['alias'] = "logout-ep"
-    logoutIdP.config['validateSignature'] = false
-    logoutIdP.config['signingCertificate'] = ''
-    return logoutIdP
-})()
-
-enrichedModels$ = concat(enrichedModels$, of(logoutIdpModel))
 
 //creazione dello spid idP su keycloak
 var createSpidIdPsOnKeycloak$ = enrichedModels$

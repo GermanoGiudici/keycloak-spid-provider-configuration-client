@@ -1,10 +1,13 @@
 require('dotenv').config()
+const slugify = require('slugify')
 const fs = require('fs')
 
 const config = {
     ...process.env
 }
 
+const SPID_PREFIX = 'SPID ';
+const SPID_ALIAS_PREFIX = 'spid-';
 exports.config = config
 
 exports.usernameMapperTemplate = require('../template/username_mm.json')
@@ -32,3 +35,20 @@ exports.patchTemplate = function (templateFilePath) {
         .replace(/%KEYCLOAKSERVERBASEURL%/g, config.keycloakServerBaseURL)
 }
 
+exports.enrichIdpWithConfigData = function (idp) {
+    let cleanedupSpidName = idp.entity_name.replace(' ID', '').replace('SPIDItalia ', '');
+    idp.alias = slugify(SPID_ALIAS_PREFIX + cleanedupSpidName).toLowerCase();
+    if (idp.metadata_url != config.spidValidatorIdPMetadataURL) { // do not tamper official name as per AgID guidelines
+        idp.displayName = SPID_PREFIX + cleanedupSpidName;
+    } 
+    idp.config = {
+        otherContactPhone: config.otherContactPhone,
+        otherContactEmail: config.otherContactEmail,
+        otherContactIpaCode: config.otherContactIpaCode,
+        organizationNames: config.organizationNames,
+        organizationDisplayNames: config.organizationDisplayNames,
+        organizationUrls: config.organizationUrls,
+        attributeConsumingServiceName: config.attributeConsumingServiceName
+    };
+    return idp;
+}
