@@ -1,7 +1,7 @@
 # Configuration Client
-It allows the configuration of a keycloak instance with the https://github.com/lscorcia/keycloak-spid-provider plugin already installed 
+It allows the configuration of a Keycloak instance with the https://github.com/italia/keycloak-spid-provider plugin already installed.
 
-## requirements
+## Requirements
 * node
 * npm
 
@@ -10,31 +10,33 @@ It allows the configuration of a keycloak instance with the https://github.com/l
 npm install
 ```
 
-copy .env-example into .env, configure it and wipe out the comments
+copy `.env-example` to `.env`, configure it and wipe out the comments then
 
-```
-npm run create-realm 
-```
-builds a pre configured realm (with the right Authenticator)
 
 ```
 npm run create-idps
 ```
-downloads the metadata from the Official Url and build all the spid identity providers in keycloak. It creates also all the suggested mappers (see the main wiki).
+downloads the metadata from the official IdP repository (https://registry.spid.gov.it/assets/data/idp.json) and builds all the SPID identity providers in Keycloak. It creates also all the suggested mappers (https://github.com/italia/spid-keycloak-provider/wiki/Mapping-SPID-attributes).
 
-If you have a spid test idP (https://github.com/italia/spid-testenv2) deployed somewhere, you can enable the configuration of the keycloak identity provider, setting the following .env file properties
+If you want to have official AgID SPID Demo Validator (https://demo.spid.gov.it/validator) enabled, set the following `.env` file properties
+
+```
+createSpidDemoIdP = true 
+```
+
+If you want to have official AgID SPID Validator (https://validator.spid.gov.it) enabled, set the following `.env` file properties
+
+```
+createSpidValidatorIdP = true 
+``` 
+
+If you have a spid test idP (https://github.com/italia/spid-testenv2) deployed somewhere, set the following `.env` file properties
 
 ```
 createSpidTestIdP = true 
 spidTestIdPAlias = spid-testenv2
 spidTestIdPMetadataURL = http://localhost:8088/metadata
 ```
-
-You can use the same properties to configure the Official Spid Validator https://github.com/italia/spid-saml-check 
-
-## TODO
-The attributeConsumingServiceIndex attribute of the Keycloak IdP configuration is incremented automatically but it's better dublecheck it 
-
 
 This project is released under the Apache License 2.0, same as the main Keycloak
 package.
