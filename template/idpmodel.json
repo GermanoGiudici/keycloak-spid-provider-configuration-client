@@ -8,7 +8,7 @@
     "addReadTokenRoleOnCreate": false,
     "authenticateByDefault": false,
     "linkOnly": false,
-    "firstBrokerLoginFlowAlias": "first broker login (SPID)",
+    "firstBrokerLoginFlowAlias": "First Broker Login (SPID)",
     "config": {
         "validateSignature": "false",
         "forceAuthn": "true",
@@ -27,12 +27,19 @@
         "authnContextComparisonType": "minimum",
         "postBindingAuthnRequest": "true",
         "syncMode": "FORCE",
-        "attributeConsumingServiceIndex": "100",
+        "attributeConsumingServiceIndex": "0",
         "singleSignOnServiceUrl": "https://mock/sso",
         "wantAuthnRequestsSigned": "true",
         "addExtensionsElementWithKeyInfo": "false",
         "principalType": "ATTRIBUTE",
-        "allowedClockSkew": ""
+        "allowedClockSkew": "",
+
+        "hideOnLoginPage": "false",
+        "backchannelSupported": "true",
+        "wantAssertionsSigned": "true",
+        "signSpMetadata": "true",
+        "debugEnabled": "false"
+
     },
     "postBrokerLoginFlowAlias": ""
 }
