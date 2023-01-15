@@ -49,7 +49,7 @@ exports.httpGrabIdPsMetadata = function () {
         headers: {}
     })
         .catch(function (error) {
-            console.log(error);
+            handleHttpError(error);
         });
 }
 
@@ -57,7 +57,8 @@ const httpGrabKeycloaktoken = function () {
     return axios(tokenConfig)
         .then(response => response.data.access_token)
         .catch(function (error) {
-            console.log(error);
+            console.error('Error retrieving Keycloak token');
+            handleHttpError(error);
         });
 }
 
@@ -78,7 +79,8 @@ exports.httpCallKeycloakImportConfig = function (idPsMetadataUrl) {
         };
         return axios(axiosConfig)
             .catch(function (error) {
-                console.log(error);
+                console.error('Error importing IdP configuration from metadata '+idPsMetadataUrl);
+                handleHttpError(error);
             });
     })
 
@@ -100,7 +102,8 @@ exports.httpCallKeycloakCreateIdP = function (idPModel) {
         };
         return axios(axiosConfig)
             .catch(function (error) {
-                console.log(error);
+                console.error('Error creating IdP '+idPModel.alias);
+                handleHttpError(error);
             });
     })
 }
@@ -119,7 +122,8 @@ exports.httpCallKeycloakDeleteIdP = function (idPAlias) {
         };
         return axios(axiosConfig)
             .catch(function (error) {
-                console.log(error);
+                console.error('Error deleting IdP '+idPAlias);
+                handleHttpError(error);
             });
     })
 }
@@ -137,7 +141,7 @@ exports.httpCallKeycloakGetIpds = function () {
         };
         return axios(axiosConfig)
             .catch(function (error) {
-                console.log(error);
+                handleHttpError(error);
             });
     })
 }
@@ -151,7 +155,7 @@ exports.httpCallKeycloakGetIpdDescription = function (idpAlias) {
     };
     return axios(axiosConfig)
         .catch(function (error) {
-            console.log(error);
+            handleHttpError(error);
         });
 
 }
@@ -193,7 +197,7 @@ exports.httpCallKeycloakImportRealm = function () {
         };
         return axios(axiosConfig)
             .catch(function (error) {
-                console.log(error);
+                handleHttpError(error);
             });
     })
 }
@@ -215,7 +219,18 @@ const httpCallKeycloakCreateMapper = function (idPAlias, mapperModel) {
         };
         return axios(axiosConfig)
             .catch(function (error) {
-                console.log(error);
+                handleHttpError(error);
             });
     })
+}
+
+const handleHttpError = function(error) {
+    if (undefined !== error.response.data.errorMessage) {
+        console.error(error.response.data.errorMessage);
+        return;
+    }
+    if (undefined !== error.response.data.error) {
+        console.error(error.response.data.error);
+        return;
+    }
 }
