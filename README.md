@@ -49,6 +49,9 @@ By default, the new IdPs are created with a SPID-specific Authentication Flow, a
 
 <img width="1455" alt="image" src="https://user-images.githubusercontent.com/2743637/212534098-d6add32d-db1b-4c63-b203-f37f78fee8f9.png">
 
+## SPID access button integrated in Keycloak theme
+https://github.com/nicolabeghin/keycloak-spid-provider-configuration-client/wiki/SPID-access-button-integrated-in-Keycloak-theme
+<img width="285" alt="image" src="https://user-images.githubusercontent.com/2743637/212535193-aae9e8ce-b4f1-4411-9811-def46419bacf.png">
 
 ## Credits
 * forked from https://github.com/GermanoGiudici/keycloak-spid-provider-configuration-client (kudos to @GermanoGiudici)
