@@ -62,7 +62,7 @@ if (config.createSpidDemoIdP === 'true') {
 
 //richiesta cancellazione degli idPs da keycloak
 var deleteKeycloakSpidIdPs$ = getOfficialSpididPsMetadata$
-    .pipe(mergeMap(spidIdPOfficialMetadata => from(httpCallKeycloakDeleteIdP(spidIdPOfficialMetadata.entity_name).then(httpResponse => spidIdPOfficialMetadata))))
+    .pipe(mergeMap(spidIdPOfficialMetadata => from(httpCallKeycloakDeleteIdP(spidIdPOfficialMetadata.alias).then(httpResponse => spidIdPOfficialMetadata))))
 
 
 //richiesta conversione in import-config model [idP,import-config-response]
