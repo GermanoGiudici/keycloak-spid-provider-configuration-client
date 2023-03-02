@@ -13,17 +13,7 @@ A NodeJS client to automatically configure a Keycloak instance already setup wit
 Docker or `node` and `npm`
 
 ## Configuration
-```
-npm install
-```
-
-copy `.env-example` to `.env`, configure it and wipe out the comments then
-
-## Running the tool
-```
-npm run create-idps
-```
-
+Copy `.env-example` to `.env`, configure it and wipe out the comments
 If you want to have official AgID SPID Demo Validator (https://demo.spid.gov.it/validator) enabled, set the following `.env` file properties
 
 ```
@@ -42,6 +32,19 @@ If you have a local [spid-saml-check](https://github.com/italia/spid-saml-check)
 createSpidTestIdP = true 
 spidTestIdPAlias = spid-saml-check
 spidTestIdPMetadataURL = https://localhost:8443/metadata.xml
+```
+
+## Running the tool
+### Docker
+Easiest way by leveraging Docker:
+
+    make
+
+### Without Docker
+If you have NodeJS installed 
+```
+npm install
+npm run create-idps
 ```
 
 ## Authentication flow
