@@ -15,7 +15,7 @@ const idPTemplate = JSON.parse(patchTemplate('./template/idpmodel.json'))
 
 //recupero url metadati
 var getOfficialSpididPsMetadata$ = from(httpGrabIdPsMetadata())
-    .pipe(mergeMap(httpResponse => from(httpResponse.data.data.map(idp => enrichIdpWithConfigData(idp)))));
+    .pipe(mergeMap(httpResponse => from(httpResponse.data.data.filter(idp => !config.singleIdp || idp.ipa_entity_code == config.singleIdp).map(idp => enrichIdpWithConfigData(idp)))));
 
 if (config.createSpidTestIdP === 'true') {
     let spidTestIdPOfficialMetadata = {

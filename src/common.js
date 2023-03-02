@@ -36,7 +36,7 @@ exports.patchTemplate = function (templateFilePath) {
 }
 
 exports.enrichIdpWithConfigData = function (idp) {
-    let cleanedupSpidName = idp.entity_name.replace(' ID', '').replace('SPIDItalia ', '');
+    let cleanedupSpidName = idp.entity_name.replace(' ID', '').replace('SPIDItalia ', '').replace(' S.C.p.A.', '');
     idp.alias = slugify(SPID_ALIAS_PREFIX + cleanedupSpidName).toLowerCase();
     if (idp.metadata_url != config.spidValidatorIdPMetadataURL) { // do not tamper official name as per AgID guidelines
         idp.displayName = SPID_PREFIX + cleanedupSpidName;
