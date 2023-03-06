@@ -1,5 +1,5 @@
 {
-    "Address": "Company Address",
+    "name": "Company Address",
     "identityProviderAlias": "CHANGE-IT",
     "identityProviderMapper": "spid-user-attribute-idp-mapper",
     "config": {
